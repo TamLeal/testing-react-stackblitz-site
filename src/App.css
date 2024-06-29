@@ -1,42 +1,173 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-background {
+  background: linear-gradient(135deg, #e0e0ff 0%, #b3b3ff 100%); /* Fundo roxo claro */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.app-container {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 2rem;
+  width: 100%;
+  max-width: 800px; /* Aumentar o tamanho do contêiner */
+}
+
+.title {
+  color: #333;
   text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.input-container {
+  display: flex;
+  margin-bottom: 1.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  margin-right: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.input:focus {
+  outline: none;
+  border-color: #667eea;
 }
 
-.card {
-  padding: 2em;
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
-.read-the-docs {
+.add-button {
+  background-color: #667eea;
+  color: white;
+}
+
+.add-button:hover {
+  background-color: #5a6fe0;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.filter-button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filter-button.active {
+  background-color: #667eea;
+  color: white;
+}
+
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  gap: 0; /* Remover gap entre os elementos internos */
+}
+
+.todo-item.completed {
+  background-color: #e6ffe6;
+}
+
+.todo-text {
+  flex-grow: 1;
+  margin-right: 1rem;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
   color: #888;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem; /* Espaçamento entre os botões */
+}
+
+.status-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.status-button.completed {
+  background-color: #FF9800;
+}
+
+.remove-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.remove-button:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    padding: 1rem;
+  }
+
+  .input-container {
+    flex-direction: column;
+  }
+
+  .input {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .status-button, .remove-button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }

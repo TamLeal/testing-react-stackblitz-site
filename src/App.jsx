@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './App.css';
 
-function TodoApp() {
+function App() {
   const [tarefas, setTarefas] = useState([]);
   const [novaTarefa, setNovaTarefa] = useState('');
+  const [filtro, setFiltro] = useState('todas');
 
-  const adicionarTarefa = () => {
+  useEffect(() => {
+    const tarefasSalvas = JSON.parse(localStorage.getItem('tarefas')) || [];
+    setTarefas(tarefasSalvas);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  }, [tarefas]);
+
+  const adicionarTarefa = (e) => {
+    e.preventDefault();
     if (novaTarefa.trim() !== '') {
       setTarefas([...tarefas, { id: Date.now(), texto: novaTarefa, concluida: false }]);
       setNovaTarefa('');
@@ -21,28 +33,65 @@ function TodoApp() {
     ));
   };
 
+  const tarefasFiltradas = tarefas.filter(tarefa => {
+    if (filtro === 'ativas') return !tarefa.concluida;
+    if (filtro === 'concluidas') return tarefa.concluida;
+    return true;
+  });
+
   return (
-    <div>
-      <h1>Lista de Tarefas</h1>
-      <div>
-        <input 
-          type="text" 
-          value={novaTarefa} 
-          onChange={(e) => setNovaTarefa(e.target.value)}
-          placeholder="Nova tarefa"
-        />
-        <button onClick={adicionarTarefa}>Adicionar</button>
+    <div className="app-background">
+      <div className="app-container">
+        <form className="input-container" onSubmit={adicionarTarefa}>
+          <input 
+            className="input"
+            type="text" 
+            value={novaTarefa} 
+            onChange={(e) => setNovaTarefa(e.target.value)}
+            placeholder="Nova tarefa"
+          />
+          <button type="submit" className="button add-button">Adicionar</button>
+        </form>
+        <h1 className="title">Lista de Tarefas</h1>
+        <div className="filter-container">
+          <button 
+            className={`filter-button ${filtro === 'todas' ? 'active' : ''}`} 
+            onClick={() => setFiltro('todas')}
+          >
+            Todas
+          </button>
+          <button 
+            className={`filter-button ${filtro === 'ativas' ? 'active' : ''}`} 
+            onClick={() => setFiltro('ativas')}
+          >
+            Ativas
+          </button>
+          <button 
+            className={`filter-button ${filtro === 'concluidas' ? 'active' : ''}`} 
+            onClick={() => setFiltro('concluidas')}
+          >
+            Concluídas
+          </button>
+        </div>
+        <ul className="todo-list">
+          {tarefasFiltradas.map(tarefa => (
+            <li key={tarefa.id} className={`todo-item ${tarefa.concluida ? 'completed' : ''}`}>
+              <span className="todo-text">{tarefa.texto}</span>
+              <div className="button-group">
+                <button 
+                  className={`button status-button ${tarefa.concluida ? 'completed' : 'active'}`} 
+                  onClick={() => alternarConcluida(tarefa.id)}
+                >
+                  {tarefa.concluida ? 'Reativar' : 'Concluir'}
+                </button>
+                <button className="button remove-button" onClick={() => removerTarefa(tarefa.id)}>Remover</button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {tarefas.map(tarefa => (
-          <li key={tarefa.id} style={{ textDecoration: tarefa.concluida ? 'line-through' : 'none' }}>
-            <span onClick={() => alternarConcluida(tarefa.id)}>{tarefa.texto}</span>
-            <button onClick={() => removerTarefa(tarefa.id)}>Remover</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
 
-export default TodoApp;
+export default App;
