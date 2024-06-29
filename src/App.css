@@ -11,6 +11,7 @@ body {
 #root {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .app-background {
@@ -34,10 +35,6 @@ body {
   max-width: 800px;
   margin-top: 20px;
 }
-
-/* O resto do seu CSS permanece o mesmo */
-
-/* O resto do seu CSS permanece o mesmo */
 
 .title {
   color: #333;
@@ -176,13 +173,25 @@ body {
     margin-bottom: 1rem;
   }
 
-  .button-group {
+  .todo-item {
     flex-direction: column;
-    width: 100%;
+    align-items: stretch;
+  }
+
+  .todo-text {
+    margin-bottom: 10px;
+    word-break: break-word;
+  }
+
+  .button-group {
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .status-button, .remove-button {
-    width: 100%;
-    margin-top: 0.5rem;
+    flex: 1;
+    margin: 5px;
+    padding: 8px 12px; /* Reduzido de 10px 15px */
+    font-size: 14px; /* Reduzido de 16px */
   }
 }
