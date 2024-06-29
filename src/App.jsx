@@ -42,6 +42,7 @@ function App() {
   return (
     <div className="app-background">
       <div className="app-container">
+        <h1 className="title">Lista de Tarefas</h1>
         <form className="input-container" onSubmit={adicionarTarefa}>
           <input 
             className="input"
@@ -52,7 +53,6 @@ function App() {
           />
           <button type="submit" className="button add-button">Adicionar</button>
         </form>
-        <h1 className="title">Lista de Tarefas</h1>
         <div className="filter-container">
           <button 
             className={`filter-button ${filtro === 'todas' ? 'active' : ''}`} 
